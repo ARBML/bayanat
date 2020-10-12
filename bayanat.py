@@ -41,20 +41,20 @@ class bayant:
   def get_stats(self):
     print('Number of words ', len(self.data.split()))
     print('Number of chars ', len(self.data))
-  
-  def get_freq_of_arabic(self):
+      
+  def get_ratio_of_arabic(self):
     count = 0 
     for char in self._get_all_alphabets():
       count += self.data.count(char)
     return count/len(self.data)
   
-  def get_freq_of_english(self):
+  def get_ratio_of_english(self):
     count = 0 
     for char in self._get_english_chars():
       count += self.data.lower().count(char)
     return count/len(self.data)
   
-  def get_freq_of_non_arabic(self):
+  def get_ratio_of_non_arabic(self):
     count = 0 
     for char in self.get_non_alphabets():
       count += self.data.lower().count(char)
@@ -80,7 +80,13 @@ class bayant:
 
   def get_number_of_lines(self):
     return len(self.data.split('\n'))
-    
+
   def sample_words_by_char(self, char, n = 10):
     occurs = re.findall('\w*'+char+'\w*', self.data)
     return np.random.choice(occurs, size = n)
+  
+  def get_top_largest_words(self, n = 10):
+    freq = Counter()
+    for word in self.data.split():
+      freq[word] = len(word)
+    return freq.most_common(n = n)
