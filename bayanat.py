@@ -3,7 +3,7 @@ import re
 import numpy as np
 import random 
 
-class bayant:
+class bayanat:
 
   def __init__(self, file_name):
     self.data = open(file_name, 'r').read()
