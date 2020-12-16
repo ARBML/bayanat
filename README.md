@@ -5,7 +5,7 @@
 
 ```python
 import bayanat
-dataset = bayant(path)
+dataset = bayanat(path)
 ```
 Arguments
 
