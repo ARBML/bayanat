@@ -4,6 +4,7 @@ import requests
 from io import BytesIO
 from zipfile import ZipFile
 import os
+import re
 
 # https://stackoverflow.com/a/53877507
 class DownloadProgressBar(tqdm):

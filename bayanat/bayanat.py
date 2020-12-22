@@ -26,7 +26,7 @@ class Bayanat:
   def _get_all_alphabets(self):
     return set('ةءاأإبتثجحخدذرزسشصضطظعغفقكلمنهوؤيئى')
 
-  def _get_all_puncts():
+  def _get_all_puncts(self):
     return set('?؟!:;-.,،')
 
   def get_non_alphabets(self):
