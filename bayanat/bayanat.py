@@ -111,7 +111,7 @@ class Bayanat:
     plt.show()
   
   # https://stackabuse.com/python-for-nlp-working-with-facebook-fasttext-library/
-  def plot_embeddings(self, words = ['سلام']):
+  def plot_embeddings(self, words = ['سلام'], figsize = (15, 10)):
     model_path = download_and_extract_model('https://bakrianoo.s3-us-west-2.amazonaws.com/aravec/full_grams_cbow_300_twitter.zip',
              'full_grams_cbow_300_twitter.zip')
     ft_model = gensim.models.Word2Vec.load(model_path)
@@ -124,7 +124,7 @@ class Bayanat:
     p_comps = pca.fit_transform(word_vectors)
     word_names = [get_display(arabic_reshaper.reshape(word)) for word in words]
 
-    plt.figure(figsize=(15, 10))
+    plt.figure(figsize=figsize)
     plt.scatter(p_comps[:, 0], p_comps[:, 1], c='red')
 
     for word_names, x, y in zip(word_names, p_comps[:, 0], p_comps[:, 1]):
