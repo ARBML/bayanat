@@ -116,6 +116,7 @@ class Bayanat:
              'full_grams_cbow_300_twitter.zip')
     ft_model = gensim.models.Word2Vec.load(model_path)
     words = [clean_str(word).replace(" ", "_") for word in words]
+    words = [word for word in words if word in ft_model]
     word_vectors = ft_model.wv[words]
 
     pca = PCA(n_components=2)
