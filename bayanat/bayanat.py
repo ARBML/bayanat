@@ -14,7 +14,7 @@ class Bayanat:
   def __init__(self, file_name):
     self.data = open(file_name, 'r').read()
   
-  def get_top_n_words(self, n = 10):
+  def get_most_freq_words(self, n = 10):
     freq = Counter()
     for word in self.data.split():
       freq[word] += 1
@@ -91,14 +91,14 @@ class Bayanat:
     occurs = re.findall('\w*'+char+'\w*', self.data)
     return np.random.choice(occurs, size = n)
   
-  def get_top_largest_words(self, n = 10):
+  def get_top_longest_words(self, n = 10):
     freq = Counter()
     for word in self.data.split():
       freq[word] = len(word)
     return freq.most_common(n = n)
   
-  def plot_top_largets_words(self, n = 100, log_scaled = False):
-    data =  self.get_top_n_words(n = n)
+  def plot_top_n_words(self, n = 100, log_scaled = False):
+    data =  self.get_most_freq_words(n = n)
     x = np.asarray(range(len(data)))
     if log_scaled == True:
       y = np.asarray([np.log(tp[1])for tp in data])
