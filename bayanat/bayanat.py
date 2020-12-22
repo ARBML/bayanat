@@ -5,7 +5,7 @@ import numpy as np
 import random 
 import matplotlib.pyplot as plt
 import gensim
-from arabic_reshaper import ArabicReshaper
+import arabic_reshaper
 from bidi.algorithm import get_display
 from bayanat.utils import * 
 
