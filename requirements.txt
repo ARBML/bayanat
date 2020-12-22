@@ -1,0 +1,3 @@
+python-bidi
+arabic-reshaper
+gensim

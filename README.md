@@ -4,8 +4,8 @@
 ## Examples
 
 ```python
-import bayanat
-dataset = bayanat(path)
+from bayanat import Bayanat
+dataset = Bayanat(path)
 ```
 Arguments
 
@@ -17,7 +17,10 @@ Arguments
 * `get_ratio_of_english` show percentage of English chars.
 * `get_ratio_of_arabic` show percentage of Arabic chars.  
 * `get_stats` print number of tokens and lines.  
+* `plot_embeddings` given some words it plots the words using embeddings. This sues `AraVec` model. 
 
+## Demo 
+Run directly on [Colab](https://colab.research.google.com/github/ARBML/bayanat/blob/master/tasks/demo.ipynb). 
 ## Contribution 
 This is an open source project where we encourage contributions from the community. 
 
