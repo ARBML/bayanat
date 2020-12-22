@@ -1,9 +1,15 @@
 from collections import Counter
 import re
+from sklearn.decomposition import PCA
 import numpy as np
 import random 
+import matplotlib.pyplot as plt
+import gensim
+from arabic_reshaper import ArabicReshaper
+from bidi.algorithm import get_display
+from bayanat.utils import * 
 
-class bayanat:
+class Bayanat:
 
   def __init__(self, file_name):
     self.data = open(file_name, 'r').read()
@@ -90,3 +96,35 @@ class bayanat:
     for word in self.data.split():
       freq[word] = len(word)
     return freq.most_common(n = n)
+  
+  def plot_top_largets_words(self, n = 100, log_scaled = False):
+    data =  self.get_top_n_words(n = n)
+    x = np.asarray(range(len(data)))
+    if log_scaled == True:
+      y = np.asarray([np.log(tp[1])for tp in data])
+    else:
+      y = np.asarray([tp[1] for tp in data])
+    plt.plot(x,y)
+    plt.xlabel('Data point')
+    plt.ylabel('Frequency')
+    plt.legend()
+    plt.show()
+  
+  # https://stackabuse.com/python-for-nlp-working-with-facebook-fasttext-library/
+  def plot_embeddings(self, words = ['سلام']):
+    model_path = download_and_extract_model('https://bakrianoo.s3-us-west-2.amazonaws.com/aravec/full_grams_cbow_300_twitter.zip',
+             'full_grams_cbow_300_twitter.zip')
+    ft_model = gensim.models.Word2Vec.load(model_path)
+    words = [clean_str(word).replace(" ", "_") for word in words]
+    word_vectors = ft_model.wv[words]
+
+    pca = PCA(n_components=2)
+
+    p_comps = pca.fit_transform(word_vectors)
+    word_names = [get_display(arabic_reshaper.reshape(word)) for word in words]
+
+    plt.figure(figsize=(15, 10))
+    plt.scatter(p_comps[:, 0], p_comps[:, 1], c='red')
+
+    for word_names, x, y in zip(word_names, p_comps[:, 0], p_comps[:, 1]):
+        plt.annotate(word_names, xy=(x+0.06, y+0.03), xytext=(0, 0), textcoords='offset points')
