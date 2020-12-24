@@ -15,12 +15,14 @@ class Bayanat:
     self.data = open(file_name, 'r').read()
   
   def get_most_freq_words(self, n = 10):
+    """Returns the most frequently used words in your dataset"""
     freq = Counter()
     for word in self.data.split():
       freq[word] += 1
     return freq.most_common(n = n)
   
   def get_chars(self):
+    """Returns a dict of characters used in your dataset"""
     return set(self.data)
 
   def _get_all_alphabets(self):
@@ -30,6 +32,7 @@ class Bayanat:
     return set('?؟!:;-.,،')
 
   def get_non_alphabets(self):
+    """Returns a dict of all the non alphabetic characters used in your dataset"""
     return self.get_chars() - self._get_all_alphabets()
   
   def _get_all_special_chars(self):
@@ -42,37 +45,49 @@ class Bayanat:
     return set('abcdefghijklmnopqrstuvwxyz')
 
   def get_puncts(self):
+    """Returns a dict of all the punctuation characters used in your dataset"""
     return self._get_all_puncts() & self.get_chars() 
   
   def get_stats(self):
+    """Prints the number of words and number of characters in your dataset"""
     print('Number of words ', len(self.data.split()))
     print('Number of chars ', len(self.data))
       
   def get_ratio_of_arabic(self):
+    """Returns a float number that represents the ratio of the total count of\
+     Arabic characters to the total count of characters in your dataset"""
     count = 0 
     for char in self._get_all_alphabets():
       count += self.data.count(char)
     return count/len(self.data)
   
   def get_ratio_of_english(self):
+    """Returns a float number that represents the ratio of the total count of\
+     English characters to the total count of characters in your dataset"""
     count = 0 
     for char in self._get_english_chars():
       count += self.data.lower().count(char)
     return count/len(self.data)
   
   def get_ratio_of_non_arabic(self):
+    """Returns a float number that represents the ratio of \
+    the total count of non-Arabic characters to the total \
+    number of characters in your dataset"""
     count = 0 
     for char in self.get_non_alphabets():
       count += self.data.lower().count(char)
     return count/len(self.data)
   
   def get_freq_of_chars(self):
+    """Returns a dict of the frequency of each character in your dataset"""
     freq = Counter()
     for char in self.data:
       freq[char] += 1
     return freq
   
   def get_largest_word(self):
+    """Returns the largest word used in your dataset\
+     in terms of number of chars used by that word"""
     largest_word = ''
     for word in self.data.split():
       if len(word) > len(largest_word):
@@ -80,24 +95,32 @@ class Bayanat:
     return largest_word
   
   def sample_random_sentence(self, size = 128):
+    """Returns a randomly sampled sentence from your corpus"""
     words = self.data.split()
     i = random.randint(0, len(words) - size)
     return (' ').join(words[i:i+size])
 
   def get_number_of_lines(self):
+    """Returns an integer number that represents the number \
+    of lines in your dataset"""
     return len(self.data.split('\n'))
 
   def sample_words_by_char(self, char, n = 10):
+    """Returns an array of words sampled to contain the char your supply\
+    The char can be in the middle, beginning, or the end of a word"""
     occurs = re.findall('\w*'+char+'\w*', self.data)
     return np.random.choice(occurs, size = n)
   
   def get_top_longest_words(self, n = 10):
+    """Returns a list of tuples that contain the longest words and \
+    the number of chars in those words"""
     freq = Counter()
     for word in self.data.split():
       freq[word] = len(word)
     return freq.most_common(n = n)
   
   def plot_top_n_words(self, n = 100, log_scaled = False):
+    """plots the top used words and their frequency"""
     data =  self.get_most_freq_words(n = n)
     x = np.asarray(range(len(data)))
     if log_scaled == True:
@@ -111,10 +134,12 @@ class Bayanat:
     plt.show()
   
   def get_number_of_words(self):
+    """Returns the number of words in a dataset"""
     return len(self.data.split(' '))
     
   # https://stackabuse.com/python-for-nlp-working-with-facebook-fasttext-library/
   def plot_embeddings(self, words = ['سلام'], figsize = (15, 10)):
+    """Given a list of words and the figsize, the function plots the words in your dataset using embeddings. This suits AraVec model."""
     model_path = download_and_extract_model('https://bakrianoo.s3-us-west-2.amazonaws.com/aravec/full_grams_cbow_300_twitter.zip',
              'full_grams_cbow_300_twitter.zip')
     ft_model = gensim.models.Word2Vec.load(model_path)
