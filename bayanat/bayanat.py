@@ -110,6 +110,9 @@ class Bayanat:
     plt.legend()
     plt.show()
   
+  def get_number_of_words(self):
+    return len(self.data.split(' '))
+    
   # https://stackabuse.com/python-for-nlp-working-with-facebook-fasttext-library/
   def plot_embeddings(self, words = ['سلام'], figsize = (15, 10)):
     model_path = download_and_extract_model('https://bakrianoo.s3-us-west-2.amazonaws.com/aravec/full_grams_cbow_300_twitter.zip',
