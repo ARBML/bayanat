@@ -160,4 +160,4 @@ class Bayanat:
   
   def get_size_vocab(self):
     """Retrieves the number of unique words """
-    return len(self.data.split(' '))
+    return len(set(self.data.split(' ')))
