@@ -8,13 +8,14 @@ import gensim
 import arabic_reshaper
 from bidi.algorithm import get_display
 from bayanat.utils import * 
+import seaborn as sns 
 
 class Bayanat:
 
   def __init__(self, file_name):
     self.data = open(file_name, 'r').read()
   
-  def get_most_freq_words(self, n = 10):
+  def get_top_freq_words(self, n = 10):
     """Returns the most frequently used words in your dataset"""
     freq = Counter()
     for word in self.data.split():
@@ -49,9 +50,10 @@ class Bayanat:
     return self._get_all_puncts() & self.get_chars() 
   
   def get_stats(self):
-    """Prints the number of words and number of characters in your dataset"""
+    """Prints the number of chars, words and lines dataset"""
     print('Number of words ', len(self.data.split()))
     print('Number of chars ', len(self.data))
+    print('Number of lines ', len(self.data.split('\n')))
       
   def get_ratio_of_arabic(self):
     """Returns a float number that represents the ratio of the total count of\
@@ -78,12 +80,12 @@ class Bayanat:
       count += self.data.lower().count(char)
     return count/len(self.data)
   
-  def get_freq_of_chars(self):
+  def get_top_freq_chars(self, n = 10):
     """Returns a dict of the frequency of each character in your dataset"""
     freq = Counter()
     for char in self.data:
       freq[char] += 1
-    return freq
+    return freq.most_common(n = n)
   
   def get_largest_word(self):
     """Returns the largest word used in your dataset\
@@ -119,20 +121,16 @@ class Bayanat:
       freq[word] = len(word)
     return freq.most_common(n = n)
   
-  def plot_top_n_words(self, n = 100, log_scaled = False):
+  def plot_top_freq_words(self, n = 100, log_scaled = False):
     """plots the top used words and their frequency"""
-    data =  self.get_most_freq_words(n = n)
-    x = np.asarray(range(len(data)))
-    if log_scaled == True:
-      y = np.asarray([np.log(tp[1])for tp in data])
-    else:
-      y = np.asarray([tp[1] for tp in data])
-    plt.plot(x,y)
-    plt.xlabel('Data point')
-    plt.ylabel('Frequency')
-    plt.legend()
-    plt.show()
+    data =  self.get_top_freq_words(n = n)
+    sns.barplot(x=[value[0] for value in data], y=[value[1] for value in data])
   
+  def plot_top_freq_chars(self, n = 100, log_scaled = False):
+    """plots the top used words and their frequency"""
+    data =  self.get_top_freq_chars(n = n)
+    sns.barplot(x=[value[0] for value in data], y=[value[1] for value in data])
+    
   def get_number_of_words(self):
     """Returns the number of words in a dataset"""
     return len(self.data.split(' '))

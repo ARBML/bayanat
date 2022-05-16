@@ -7,16 +7,16 @@
 from bayanat import Bayanat
 dataset = Bayanat(path)
 ```
-Arguments
+Functions
 
-* `get_top_largest_words` retrieves largest words. 
+* `get_top_freq_words` retrieves n largest words. 
 * `sample_words_by_char` sample words by character. 
 * `sample_random_sentence` sample a sentence with a given size. 
 * `get_freq_of_chars` get all chars and frequency. 
 * `get_ratio_of_non_arabic` show percentage of non Arabic chars. 
 * `get_ratio_of_english` show percentage of English chars.
 * `get_ratio_of_arabic` show percentage of Arabic chars.  
-* `get_stats` print number of tokens and lines.  
+* `get_stats` print number of chars, words and lines.  
 * `plot_embeddings` given some words it plots the words using embeddings. This sues `AraVec` model. 
 
 ## Demo 
