@@ -1,10 +1,10 @@
 from tqdm import tqdm
 import urllib.request
-import requests
-from io import BytesIO
 from zipfile import ZipFile
 import os
 import re
+import arabic_reshaper
+from bidi.algorithm import get_display
 
 # https://stackoverflow.com/a/53877507
 class DownloadProgressBar(tqdm):
@@ -29,7 +29,11 @@ def download_and_extract_model(url, output_path):
       zf.extractall()
       
   return file_name
-
+def reshape_arabic(data):
+  data = arabic_reshaper.reshape(data)
+  data = get_display(data)
+  return data
+  
 # https://github.com/bakrianoo/aravec/blob/79d7f0011ecd79e4f60d33c82514ee44dfa0ad92/utilities.py#L8
 def clean_str(text):
     search = ["أ","إ","آ","ة","_","-","/",".","،"," و "," يا ",'"',"ـ","'","ى","\\",'\n', '\t','&quot;','?','؟','!']

@@ -5,11 +5,8 @@ import numpy as np
 import random 
 import matplotlib.pyplot as plt
 import gensim
-import arabic_reshaper
-from bidi.algorithm import get_display
 from bayanat.utils import * 
 import seaborn as sns 
-from bidi.algorithm import get_display
 import os
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
@@ -128,22 +125,22 @@ class Bayanat:
   def plot_top_freq_words(self, n = 100, log_scaled = False):
     """plots the top used words and their frequency"""
     data =  self.get_top_freq_words(n = n)
-    sns.barplot(x=[value[0] for value in data], y=[value[1] for value in data])
+    sns.barplot(x=[reshape_arabic(value[0]) for value in data], y=[value[1] for value in data])
   
   def plot_top_freq_chars(self, n = 100, log_scaled = False):
     """plots the top used words and their frequency"""
     data =  self.get_top_freq_chars(n = n)
-    sns.barplot(x=[value[0] for value in data], y=[value[1] for value in data])
+    sns.barplot(x=[reshape_arabic(value[0]) for value in data], y=[value[1] for value in data])
     
   def get_number_of_words(self):
     """Returns the number of words in a dataset"""
     return len(self.data.split(' '))
   
   def plot_word_cloud(self):
+    """Plots the word cloud"""
     rel_path = os.path.dirname(__file__)
     font_path = os.path.join(rel_path, "fonts/Arial-Regular.ttf")
-    data = arabic_reshaper.reshape(self.data)
-    data = get_display(data) 
+    data = reshape_arabic(self.data)
     wc = WordCloud(font_path=font_path,  background_color='white',
                       mode='RGB', width=2000, height=1000).generate(data)
     plt.title("wordcloud")
