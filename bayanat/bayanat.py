@@ -9,6 +9,10 @@ import arabic_reshaper
 from bidi.algorithm import get_display
 from bayanat.utils import * 
 import seaborn as sns 
+from bidi.algorithm import get_display
+import os
+import matplotlib.pyplot as plt
+from wordcloud import WordCloud
 
 class Bayanat:
 
@@ -134,6 +138,18 @@ class Bayanat:
   def get_number_of_words(self):
     """Returns the number of words in a dataset"""
     return len(self.data.split(' '))
+  
+  def plot_word_cloud(self):
+    rel_path = os.path.dirname(__file__)
+    font_path = os.path.join(rel_path, "fonts/Arial-Regular.ttf")
+    data = arabic_reshaper.reshape(self.data)
+    data = get_display(data) 
+    wc = WordCloud(font_path=font_path,  background_color='white',
+                      mode='RGB', width=2000, height=1000).generate(data)
+    plt.title("wordcloud")
+    plt.imshow(wc)
+    plt.axis("off")
+    plt.show()
     
   # https://stackabuse.com/python-for-nlp-working-with-facebook-fasttext-library/
   def plot_embeddings(self, words = ['سلام'], figsize = (15, 10)):

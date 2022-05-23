@@ -2,3 +2,6 @@ python-bidi
 arabic-reshaper
 gensim
 seaborn
+wordcloud
+python-bidi
+seaborn
